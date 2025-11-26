@@ -295,6 +295,18 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Node.js / TypeScript specific
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+*.tsbuildinfo
+.npm
+.eslintcache
+.stylelintcache
+.yarn-integrity
+
 # Visual Studio 6 build log
 *.plg
 
