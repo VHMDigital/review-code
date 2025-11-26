@@ -36,7 +36,6 @@ export function getVariable(name: string): string | undefined {
     return result;
 };
 
-// re-export everything from task-lib
 export * from 'azure-pipelines-task-lib/task';
 
 export default {

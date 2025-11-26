@@ -1,9 +1,4 @@
-/**
- * Configuração centralizada da aplicação
- * Responsável por carregar e validar todas as configurações necessárias
- */
 export interface IAppConfig {
-    // OpenAI Configuration
     openai: {
         apiKey: string;
         model: string;
@@ -11,7 +6,6 @@ export interface IAppConfig {
         azureApiVersion?: string;
     };
 
-    // Azure DevOps Configuration
     azureDevOps: {
         collectionUri: string;
         teamProjectId: string;
@@ -23,7 +17,6 @@ export interface IAppConfig {
         targetBranch?: string;
     };
 
-    // Review Options
     reviewOptions: {
         checkBugs: boolean;
         checkPerformance: boolean;
@@ -34,7 +27,6 @@ export interface IAppConfig {
         verboseLogging: boolean;
     };
 
-    // File Filters
     fileFilters: {
         extensions?: string[];
         extensionExcludes?: string[];
@@ -42,7 +34,6 @@ export interface IAppConfig {
         excludes?: string[];
     };
 
-    // Advanced Options
     advanced: {
         additionalPrompts?: string[];
         confidenceMode: boolean;
@@ -51,7 +42,6 @@ export interface IAppConfig {
         dedupeAcrossFilesThreshold: number;
     };
 
-    // Development Options
     development: {
         isDev: boolean;
         autoSetupPRBranch: boolean;
@@ -90,24 +80,14 @@ export class AppConfig implements IAppConfig {
         }
     }
 
-    /**
-     * Verifica se está usando Azure OpenAI
-     */
     isAzureOpenAI(): boolean {
         return !!this.openai.azureEndpoint;
     }
 
-    /**
-     * Retorna o modelo ou deployment name
-     */
     getModelName(): string {
         return this.openai.model || 'gpt-4o';
     }
 
-    /**
-     * Converte AppConfig para InputValues (formato legado)
-     * Usado para manter compatibilidade com código existente
-     */
     toInputValues(): import('../domain/entities/inputValues').InputValues {
         return {
             apiKey: this.openai.apiKey,
