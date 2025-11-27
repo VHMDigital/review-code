@@ -42,60 +42,65 @@ export class OpenAIClient implements IAIClient {
         const opts = this._config.reviewOptions;
         const advanced = this._config.advanced;
 
-        let message = `Your task is to act as a code reviewer of a pull request within Azure DevOps.
-        - You are provided with the code changes (diff) in a Unified Diff format.
-        - You are provided with a file path (fileName).
-        - You are provided with a string array of existing comments (existingComments). Only add new comments for issues not already in existingComments. For each distinct issue, leave a single comment and instruct the author to apply it to all affected areas in the pull request.
-        - Do not highlight minor issues and nitpicks.
+        let message = `Você é um revisor de código especializado analisando Pull Requests no Azure DevOps. Todas as suas respostas devem ser em português brasileiro.
+
+        INSTRUÇÕES:
+        - Você receberá as alterações de código (diff) em formato Unified Diff
+        - Você receberá o caminho do arquivo (fileName)
+        - Você receberá um array de comentários existentes (existingComments). Adicione apenas novos comentários para problemas que NÃO estejam em existingComments
+        - Para cada problema distinto, deixe um único comentário instruindo o autor a aplicá-lo em todas as áreas afetadas do pull request
+        - NÃO destaque problemas menores ou detalhes insignificantes
         ${advanced.confidenceMode
-                ? '- For each code review comment you generate, include a (confidenceScore) field that rates your confidence in the likelihood that the comment identifies an actionable issue. Use a scale from 1 to 10, where 1 means very unlikely and 10 means very likely.'
+                ? '- Para cada comentário gerado, inclua um campo (confidenceScore) que avalie sua confiança na probabilidade do comentário identificar um problema acionável. Use escala de 1 a 10, onde 1 = muito improvável e 10 = muito provável'
                 : ''}
-        ${opts.modifiedLinesOnly ? '- Only comment on modified lines.' : ''}
-        ${opts.checkBugs ? '- If there are any bugs, highlight them.' : ''}
-        ${opts.checkPerformance ? '- If there are major performance problems, highlight them.' : ''}
+        ${opts.modifiedLinesOnly ? '- Comente APENAS nas linhas modificadas' : ''}
+        ${opts.checkBugs ? '- Se houver bugs, destaque-os claramente' : ''}
+        ${opts.checkPerformance ? '- Se houver problemas graves de performance, destaque-os' : ''}
         ${
             opts.checkBestPractices
-                ? '- Provide details on missed use of best-practices.'
-                : '- Do not provide comments on best practices.'
+                ? '- Forneça detalhes sobre boas práticas não aplicadas'
+                : '- NÃO comente sobre boas práticas'
         }
         ${advanced.additionalPrompts && advanced.additionalPrompts.length > 0 
             ? advanced.additionalPrompts.map((str) => `- ${str}`).join('\n') 
-            : ''}`;
+            : ''}
 
-        message += `\n\nThe response should be a single JSON object (without fenced codeblock) and it must use this sample JSON format:
+        IMPORTANTE: Todos os comentários devem ser escritos em português brasileiro claro e profissional.`;
+
+        message += `\n\nA resposta deve ser um único objeto JSON (sem blocos de código markdown) e deve usar este formato:
         {
             "threads": [
                 {
                     "comments": [
                         {
-                            "content": "<Comment in markdown format without markdown fenced codeblock>",
+                            "content": "<Comentário em formato markdown sem blocos de código>",
                             "commentType": 2,
-                            ${advanced.confidenceMode ? '"confidenceScore": <integer>,' : ''}
-                            ${advanced.confidenceMode ? '"confidenceScoreJustification": "<string>",' : ''}
-                            "fixSuggestion": "<string: If there is code that can replace the original code and fix the commented issue, provide only the replacement code (no explanations, no comments, and no code fences)>",
-                            "issueType": "<string: E.g. performance, security, best-practice, style, code smell, etc.>"
+                            ${advanced.confidenceMode ? '"confidenceScore": <inteiro>,' : ''}
+                            ${advanced.confidenceMode ? '"confidenceScoreJustification": "<string: justificativa em português>",' : ''}
+                            "fixSuggestion": "<string: Se houver código que possa substituir o código original e corrigir o problema comentado, forneça APENAS o código de substituição (sem explicações, sem comentários e sem blocos de código)>",
+                            "issueType": "<string: Ex: performance, segurança, boas-práticas, estilo, code-smell, etc.>"
                         }
                     ],
                     "status": 1,
                     "threadContext": {
-                        "filePath": "<string: path to file. use filePath that was provided.>",
+                        "filePath": "<string: caminho do arquivo. use o filePath fornecido>",
                         "leftFileStart": {
-                            "line": <integer>,
-                            "offset": <integer>,
-                            "snippet": "<code snippet>"
+                            "line": <inteiro>,
+                            "offset": <inteiro>,
+                            "snippet": "<trecho de código>"
                         },
                         "leftFileEnd": {
-                            "line": <integer>,
-                            "offset": <integer>
+                            "line": <inteiro>,
+                            "offset": <inteiro>
                         },
                         "rightFileStart": {
-                            "line": <integer>,
-                            "offset": <integer>,
-                            "snippet": "<code snippet>"
+                            "line": <inteiro>,
+                            "offset": <inteiro>,
+                            "snippet": "<trecho de código>"
                         },
                         "rightFileEnd": {
-                            "line": <integer>,
-                            "offset": <integer>
+                            "line": <inteiro>,
+                            "offset": <inteiro>
                         }
                     }
                 }
