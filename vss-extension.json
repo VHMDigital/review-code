@@ -1,16 +1,16 @@
 {
     "manifestVersion": 1,
-    "id": "pria",
-    "version": "2.1.46",
-    "name": "PR Inspection Assistant",
-    "publisher": "EricWellnitz",
-    "public": true,
+    "id": "reviewcode",
+    "version": "1.0.2",
+    "name": "Review Code",
+    "publisher": "VHMDigital",
+    "public": false,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Automate pull request reviews in Azure DevOps using OpenAI or Azure OpenAI APIs. This bot analyzes code changes, offers suggestions, detects potential bugs, and ensures adherence to coding standards.",
+    "description": "Automatize revisões de pull requests no Azure DevOps usando OpenAI ou Azure OpenAI. Analisa código, oferece sugestões, detecta bugs e garante aderência a padrões de qualidade.",
     "categories": ["Azure Pipelines"],
     "tags": [
         "PR",
@@ -36,13 +36,13 @@
     },
     "links": {
         "support": {
-            "uri": "https://github.com/ewellnitz/pr-inspection-assistant",
+            "uri": "https://github.com/VHMDigital/review-code",
             "version": "1.0.0"
         }
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/ewellnitz/pr-inspection-assistant"
+        "uri": "https://github.com/VHMDigital/review-code"
     },
     "screenshots": [],
     "content": {
@@ -52,24 +52,17 @@
     },
     "files": [
         {
-            "path": "src"
-        },
-        {
-            "path": "assets/overview.md",
-            "addressable": true
-        },
-        {
-            "path": "assets/logo.png",
-            "addressable": true
+            "path": ".",
+            "packagePath": "/"
         }
     ],
     "contributions": [
         {
-            "id": "custom-build-release-task",
+            "id": "assistente-revisao-task",
             "type": "ms.vss-distributed-task.task",
             "targets": ["ms.vss-distributed-task.tasks"],
             "properties": {
-                "name": "src"
+                "name": "."
             }
         }
     ]

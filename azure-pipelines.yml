@@ -8,7 +8,7 @@ pr:
     include:
       - main
       - develop
-      - release/*
+      - release/1.0.0
   paths:
     exclude:
       - README.md
@@ -24,20 +24,20 @@ variables:
 jobs:
   - job: CodeReview
     displayName: 'Revisão Automatizada de Código'
-    timeoutInMinutes: 10
+    timeoutInMinutes: '10'
     
     steps:
       - checkout: self
         displayName: 'Checkout do Repositório'
-        persistCredentials: true
-        clean: true
+        persistCredentials: 'true'
+        clean: 'true'
       
       - task: NodeTool@0
         displayName: 'Instalar Node.js'
         inputs:
           versionSpec: '20.x'
       
-      - task: AssistenteRevisao@1
+      - task: ReviewCode@1
         displayName: 'Analisar Pull Request com IA'
         inputs:
           api_key: '$(OpenAI_ApiKey)'
@@ -47,6 +47,9 @@ jobs:
           bugs: true
           performance: true
           best_practices: true
+          clean_code: true
+          decoupling: true
+          improvement_suggestions: true
           modified_lines_only: true
           file_excludes: '*.json,*.lock,*.md,*.yml,*.yaml'
           verbose_logging: false
