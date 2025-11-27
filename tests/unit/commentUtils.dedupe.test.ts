@@ -83,7 +83,6 @@ describe('CommentUtils.getCommentContentForExclusion', () => {
             ...baseInputs,
             confidenceMode: false,
         };
-        // All run comments are counted, so 2 > 1 triggers deduplication
         const [excluded, dedupeMet] = CommentUtils.getCommentContentForExclusion(
             fileComments,
             runComments,

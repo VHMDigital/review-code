@@ -1,14 +1,7 @@
 import tl from '../utils/taskWrapper';
 import { AppConfig, IAppConfig } from './AppConfig';
 
-/**
- * Carregador de configurações
- * Abstrai a origem das configurações (env vars, task inputs, etc)
- */
 export class ConfigLoader {
-    /**
-     * Carrega configurações de variáveis de ambiente ou task inputs
-     */
     static load(): AppConfig {
         const config: IAppConfig = {
             openai: {
@@ -75,9 +68,6 @@ export class ConfigLoader {
             .filter((s) => s.length > 0);
     }
 
-    /**
-     * Loga as configurações de forma segura (mascarando dados sensíveis)
-     */
     static logConfig(config: AppConfig): void {
         console.info('=== Application Configuration ===');
         console.info('OpenAI:');

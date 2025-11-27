@@ -3,10 +3,6 @@ import { AppConfig } from '../../config/AppConfig';
 import { ILogger } from '../../domain/interfaces/ILogger';
 import fetch from 'node-fetch';
 import { Agent } from 'https';
-
-/**
- * Cliente HTTP para Azure DevOps API
- */
 export class AzureDevOpsHttpClient implements IAzureDevOpsClient {
     private readonly _httpsAgent: Agent;
     private readonly _config: AppConfig;

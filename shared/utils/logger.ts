@@ -3,9 +3,7 @@ export class Logger {
         try {
             process.stdout?.write('');
             process.stderr?.write('');
-        } catch {
-            // Ignore flush errors
-        }
+        } catch {}
     }
 
     public static info(message: string, ...args: any[]): void {

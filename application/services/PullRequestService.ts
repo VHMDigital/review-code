@@ -9,9 +9,6 @@ import { GitPullRequestIterationChanges } from '../../domain/entities/azureDevOp
 import { AppConfig } from '../../config/AppConfig';
 import { ILogger } from '../../domain/interfaces/ILogger';
 
-/**
- * Serviço para operações com Pull Requests no Azure DevOps
- */
 export class PullRequestService implements IPullRequestService {
     private static readonly PRIA_LAST_REVIEWED_KEY = 'Pria.LastReviewedIteration';
     

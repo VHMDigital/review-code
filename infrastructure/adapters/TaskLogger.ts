@@ -1,9 +1,5 @@
 import { ILogger } from '../../domain/interfaces/ILogger';
 import tl from '../../utils/taskWrapper';
-
-/**
- * Implementação do Logger usando Azure DevOps Task Library
- */
 export class TaskLogger implements ILogger {
     info(message: string, ...args: any[]): void {
         if (args.length > 0) {

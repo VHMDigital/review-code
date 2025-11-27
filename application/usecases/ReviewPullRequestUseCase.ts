@@ -6,17 +6,6 @@ import { Thread } from '../../domain/entities';
 import { Review } from '../../domain/entities';
 import { ReviewResult } from '../../domain/entities';
 
-/**
- * Use Case: Realizar revisão completa de um Pull Request
- * 
- * Este é o caso de uso principal que orquestra todo o processo de revisão:
- * 1. Valida se é um trigger válido (PR)
- * 2. Obtém o range de iterações a revisar
- * 3. Filtra arquivos para revisão
- * 4. Executa revisão com IA
- * 5. Processa e adiciona comentários
- * 6. Salva estado da revisão
- */
 export class ReviewPullRequestUseCase {
     private readonly container: IServiceContainer;
 
@@ -24,24 +13,18 @@ export class ReviewPullRequestUseCase {
         this.container = container;
     }
 
-    /**
-     * Executa a revisão completa do Pull Request
-     */
     async execute(): Promise<void> {
         const { logger, config, repository, pullRequestService, aiClient } = this.container;
 
         try {
-            // Validação inicial
             if (!this.isValidTrigger()) {
                 return;
             }
 
             logger.info('Starting Pull Request review process...');
 
-            // Configuração do repositório
             await repository.setupCurrentBranch();
 
-            // Determina o range de revisão
             const { reviewRange, isRequeued } = await this.getReviewRange();
             
             if (isRequeued && !config.reviewOptions.allowRequeue) {
@@ -49,11 +32,9 @@ export class ReviewPullRequestUseCase {
                 return;
             }
 
-            // Obtém arquivos modificados
             const iterationFiles = await pullRequestService.getIterationFiles(reviewRange);
             logger.info(`Found ${iterationFiles.length} changed files in this run:`);
 
-            // Filtra arquivos para revisão
             const filesToReview = this.filterFiles(iterationFiles);
             logger.info(`After filtering, ${filesToReview.length} files will be reviewed:`, filesToReview);
 
@@ -63,13 +44,10 @@ export class ReviewPullRequestUseCase {
                 return;
             }
 
-            // Executa revisão dos arquivos
             const reviewResults = await this.reviewFiles(filesToReview);
 
-            // Processa e adiciona comentários
             await this.processReviewResults(reviewResults);
 
-            // Salva estado da última revisão
             await pullRequestService.saveLastReviewedIteration(reviewRange);
 
             logger.setResult('succeeded', 'Pull Request reviewed.');
@@ -81,9 +59,6 @@ export class ReviewPullRequestUseCase {
         }
     }
 
-    /**
-     * Valida se o trigger é válido (deve ser PR)
-     */
     private isValidTrigger(): boolean {
         const { logger } = this.container;
         const buildReason = this.container.config.azureDevOps.collectionUri ? 'PullRequest' : 'Manual';
@@ -104,9 +79,6 @@ export class ReviewPullRequestUseCase {
         return true;
     }
 
-    /**
-     * Determina o range de iterações a revisar
-     */
     private async getReviewRange() {
         const { logger, pullRequestService } = this.container;
 
@@ -125,9 +97,6 @@ export class ReviewPullRequestUseCase {
         return { reviewRange, isRequeued };
     }
 
-    /**
-     * Filtra arquivos baseado nas configurações
-     */
     private filterFiles(iterationFiles: string[]): string[] {
         const { fileFilters } = this.container.config;
 
@@ -140,9 +109,6 @@ export class ReviewPullRequestUseCase {
         });
     }
 
-    /**
-     * Executa a revisão de todos os arquivos
-     */
     private async reviewFiles(filesToReview: string[]): Promise<ReviewResult[]> {
         const { logger, config, repository, pullRequestService, aiClient } = this.container;
 
@@ -156,7 +122,6 @@ export class ReviewPullRequestUseCase {
         for (const [index, fileName] of filesToReview.entries()) {
             logger.info(`Reviewing file ${index + 1}/${filesToReview.length}: ${fileName}`);
 
-            // Obtém comentários existentes
             const existingFileComments = await pullRequestService.getCommentsForFile(fileName);
             const [commentsForExclusion, newDedupeMet] = CommentUtils.getCommentContentForExclusion(
                 existingFileComments,
@@ -170,17 +135,14 @@ export class ReviewPullRequestUseCase {
             logger.info('Current run comments: ' + currentRunComments.length);
             logger.info('Comments for exclusion: ' + commentsForExclusion.length, commentsForExclusion);
 
-            // Obtém diff e executa revisão
             const diff = await repository.getDiff(fileName);
             const codeReview = await aiClient.performCodeReview(diff, fileName, commentsForExclusion);
 
-            // Coleta novos comentários
             const newComments = codeReview.threads.flatMap((thread) => thread.comments);
             currentRunComments.push(...newComments);
 
             reviewResults.push({ fileName, codeReview });
 
-            // Atualiza progresso
             const progressPercent = ((index + 1) / filesToReview.length) * 50;
             logger.setProgress(progressPercent, `Step 1: Performing Code Review (${index + 1}/${filesToReview.length})`);
             logger.info(`Completed review of file ${fileName}`);
@@ -189,9 +151,6 @@ export class ReviewPullRequestUseCase {
         return reviewResults;
     }
 
-    /**
-     * Processa os resultados da revisão e adiciona threads
-     */
     private async processReviewResults(reviewResults: ReviewResult[]): Promise<void> {
         const { logger, config, pullRequestService } = this.container;
 
@@ -218,14 +177,10 @@ export class ReviewPullRequestUseCase {
             );
         }
 
-        // Resumo da revisão
         const summary = this.summarizeReviewResults(reviewResults, filteredReviewResults);
         this.logReviewSummary(summary);
     }
 
-    /**
-     * Processa uma thread individual (filtra por confiança se necessário)
-     */
     private processThread(thread: Thread): void {
         const { logger, config } = this.container;
 
@@ -247,9 +202,6 @@ export class ReviewPullRequestUseCase {
         }
     }
 
-    /**
-     * Gera resumo dos resultados da revisão
-     */
     private summarizeReviewResults(
         reviewResults: ReviewResult[],
         filteredReviewResults: ReviewResult[]
@@ -274,9 +226,6 @@ export class ReviewPullRequestUseCase {
         return summary;
     }
 
-    /**
-     * Loga o resumo da revisão
-     */
     private logReviewSummary(summary: {
         totalComments: number;
         remainingComments: number;
