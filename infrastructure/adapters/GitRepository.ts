@@ -3,9 +3,6 @@ import { SimpleGit, SimpleGitOptions, simpleGit } from 'simple-git';
 import { AppConfig } from '../../config/AppConfig';
 import { ILogger } from '../../domain/interfaces/ILogger';
 
-/**
- * Implementação do repositório Git usando simple-git
- */
 export class GitRepository implements IRepository {
     private readonly _repository: SimpleGit;
     private readonly _config: AppConfig;
@@ -33,7 +30,6 @@ export class GitRepository implements IRepository {
     }
 
     async setupCurrentBranch(): Promise<void> {
-        // Necessário apenas para modo dev
         if (this._config.development.isDev && this._config.development.autoSetupPRBranch) {
             const pullRequestBranch = `pull/${this._config.azureDevOps.pullRequestId}/merge`;
             this._logger.info(`Setting up PR branch: ${pullRequestBranch}`);

@@ -1,9 +1,3 @@
-/**
- * Re-export dos tipos renomeados para manter compatibilidade
- * Isso permite migração gradual do código antigo
- */
-
-// Core types
 export { Comment } from './domain/entities/comment';
 export { Thread } from './domain/entities/thread';
 export { ThreadContext } from './domain/entities/threadContext';
@@ -12,8 +6,6 @@ export { Review } from './domain/entities/review';
 export { ReviewResult } from './domain/entities/reviewResult';
 export { IterationRange } from './domain/entities/iterationRange';
 export { InputValues } from './domain/entities/inputValues';
-
-// Azure DevOps types
 export { GitChange } from './domain/entities/azureDevOps/gitChange';
 export { GitChangeItem } from './domain/entities/azureDevOps/gitChangeItem';
 export { GitCommitChanges } from './domain/entities/azureDevOps/gitCommitChanges';

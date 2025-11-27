@@ -8,9 +8,6 @@ import { CommentLineNumberAndOffsetFixer } from '../../shared/utils';
 
 type Client = OpenAI | AzureOpenAI;
 
-/**
- * Cliente OpenAI para revisão de código com IA
- */
 export class OpenAIClient implements IAIClient {
     private readonly _client: Client;
     private readonly _config: AppConfig;
@@ -21,11 +18,7 @@ export class OpenAIClient implements IAIClient {
     constructor(config: AppConfig, logger: ILogger) {
         this._config = config;
         this._logger = logger;
-
-        // Cria o cliente apropriado (OpenAI ou Azure OpenAI)
         this._client = this.createClient();
-
-        // Gera a mensagem de sistema baseada nas configurações
         this._systemMessage = this.buildSystemMessage();
         this._logger.info(`System prompt:\n${this._systemMessage}`);
     }

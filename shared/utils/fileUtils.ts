@@ -14,12 +14,10 @@ export function filterFilesForReview({
     filesToExclude?: string;
     files: string[];
 }): string[] {
-    // Filter out binary files
     let filesToReview = files.filter(
         (file) => !binaryExtensions.includes(file.slice(((file.lastIndexOf('.') - 1) >>> 0) + 2))
     );
 
-    // Handle file extensions and inclusion patterns
     if (fileExtensions || filesToInclude) {
         const fileExtensionsToInclude = parseInputToArray(fileExtensions);
         const fileToIncludeGlob = parseInputToArray(filesToInclude);
@@ -33,7 +31,6 @@ export function filterFilesForReview({
         });
     }
 
-    // Handle file extension exclusions and exclusion patterns
     if (fileExtensionExcludes || filesToExclude) {
         const fileExtensionsToExclude = parseInputToArray(fileExtensionExcludes);
         const filesToExcludeGlob = parseInputToArray(filesToExclude);
