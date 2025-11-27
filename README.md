@@ -81,8 +81,9 @@ Configure a [política de branch](https://learn.microsoft.com/pt-br/azure/devops
 ### Compilar e Publicar
 
 ```bash
-cd pr-inspection-assistant/src
 npm install
+npm run build
+npm test
 npm run package
 ```
 
@@ -91,10 +92,10 @@ npm run package
 1. Copie `.env.example` para `.env` e preencha as variáveis
 2. Execute `npm run dev`
 
-Para mais detalhes, consulte [QUICK_START.md](docs/QUICK_START.md)
-
 ## Documentação
 
+- [Configuração Azure Repos Git](docs/AZURE_REPOS_SETUP.md) ⭐ **Recomendado**
+- [Guia Completo Azure Pipelines](docs/AZURE_PIPELINE_GUIDE.md)
 - [Arquitetura](docs/ARCHITECTURE.md)
 - [Guia Rápido](docs/QUICK_START.md)
 - [Status da Refatoração](docs/REFACTORING_STATUS.md)
