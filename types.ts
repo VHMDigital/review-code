@@ -1,0 +1,17 @@
+export { Comment } from './domain/entities/comment';
+export { Thread } from './domain/entities/thread';
+export { ThreadContext } from './domain/entities/threadContext';
+export { ThreadContextFilePosition } from './domain/entities/threadContextFilePosition';
+export { Review } from './domain/entities/review';
+export { ReviewResult } from './domain/entities/reviewResult';
+export { IterationRange } from './domain/entities/iterationRange';
+export { InputValues } from './domain/entities/inputValues';
+export { GitChange } from './domain/entities/azureDevOps/gitChange';
+export { GitChangeItem } from './domain/entities/azureDevOps/gitChangeItem';
+export { GitCommitChanges } from './domain/entities/azureDevOps/gitCommitChanges';
+export { GitCommitRef } from './domain/entities/azureDevOps/gitCommitRef';
+export { GitPullRequest } from './domain/entities/azureDevOps/gitPullRequest';
+export { GitPullRequestIterationChange } from './domain/entities/azureDevOps/gitPullRequestIterationChange';
+export { GitPullRequestIterationChangeItem } from './domain/entities/azureDevOps/gitPullRequestIterationChangeItem';
+export { GitPullRequestIterationChanges } from './domain/entities/azureDevOps/gitPullRequestIterationChanges';
+export { PropertiesCollection } from './domain/entities/azureDevOps/propertiesCollection';

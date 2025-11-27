@@ -1,0 +1,59 @@
+# Pipeline de Revisão Automatizada de Pull Requests
+# Configurado para Azure Repos Git
+
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+      - release/1.0.0
+  paths:
+    exclude:
+      - README.md
+      - docs/*
+      - '*.md'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: OpenAI-Config
+
+jobs:
+  - job: CodeReview
+    displayName: 'Revisão Automatizada de Código'
+    timeoutInMinutes: '10'
+    
+    steps:
+      - checkout: self
+        displayName: 'Checkout do Repositório'
+        persistCredentials: 'true'
+        clean: 'true'
+      
+      - task: NodeTool@0
+        displayName: 'Instalar Node.js'
+        inputs:
+          versionSpec: '20.x'
+      
+      - task: ReviewCode@1
+        displayName: 'Analisar Pull Request com IA'
+        inputs:
+          api_key: '$(OpenAI_ApiKey)'
+          api_endpoint: '$(OpenAI_Endpoint)'
+          api_version: '$(OpenAI_Version)'
+          ai_model: '$(OpenAI_Model)'
+          bugs: true
+          performance: true
+          best_practices: true
+          clean_code: true
+          decoupling: true
+          improvement_suggestions: true
+          modified_lines_only: true
+          file_excludes: '*.json,*.lock,*.md,*.yml,*.yaml'
+          verbose_logging: false
+          comment_line_correction: true
+          dedupe_across_files: true
+          dedupe_across_files_threshold: '10'
+        continueOnError: false

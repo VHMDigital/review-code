@@ -1,0 +1,69 @@
+{
+    "manifestVersion": 1,
+    "id": "reviewcode",
+    "version": "1.0.2",
+    "name": "Review Code",
+    "publisher": "VHMDigital",
+    "public": false,
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "Automatize revisões de pull requests no Azure DevOps usando OpenAI ou Azure OpenAI. Analisa código, oferece sugestões, detecta bugs e garante aderência a padrões de qualidade.",
+    "categories": ["Azure Pipelines"],
+    "tags": [
+        "PR",
+        "Code Analysis",
+        "Open AI",
+        "OpenAI",
+        "Code Quality",
+        "ChatGPT",
+        "Quality Assurance",
+        "Pull Request",
+        "Pipeline",
+        "Code Inspection",
+        "Peer Review",
+        "Code Review",
+        "AI"
+    ],
+    "icons": {
+        "default": "assets/logo.png"
+    },
+    "branding": {
+        "color": "rgb(138, 43, 226)",
+        "theme": "dark"
+    },
+    "links": {
+        "support": {
+            "uri": "https://github.com/VHMDigital/review-code",
+            "version": "1.0.0"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/VHMDigital/review-code"
+    },
+    "screenshots": [],
+    "content": {
+        "details": {
+            "path": "assets/overview.md"
+        }
+    },
+    "files": [
+        {
+            "path": ".",
+            "packagePath": "/"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "assistente-revisao-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": ["ms.vss-distributed-task.tasks"],
+            "properties": {
+                "name": "."
+            }
+        }
+    ]
+}
