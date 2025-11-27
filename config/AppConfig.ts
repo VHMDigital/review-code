@@ -21,6 +21,9 @@ export interface IAppConfig {
         checkBugs: boolean;
         checkPerformance: boolean;
         checkBestPractices: boolean;
+        cleanCode: boolean;
+        decoupling: boolean;
+        improvementSuggestions: boolean;
         modifiedLinesOnly: boolean;
         enableCommentLineCorrection: boolean;
         allowRequeue: boolean;
@@ -102,6 +105,9 @@ export class AppConfig implements IAppConfig {
             bugs: this.reviewOptions.checkBugs,
             performance: this.reviewOptions.checkPerformance,
             bestPractices: this.reviewOptions.checkBestPractices,
+            cleanCode: this.reviewOptions.cleanCode,
+            decoupling: this.reviewOptions.decoupling,
+            improvementSuggestions: this.reviewOptions.improvementSuggestions,
             modifiedLinesOnly: this.reviewOptions.modifiedLinesOnly,
             enableCommentLineCorrection: this.reviewOptions.enableCommentLineCorrection,
             allowRequeue: this.reviewOptions.allowRequeue,

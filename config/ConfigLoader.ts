@@ -27,6 +27,9 @@ export class ConfigLoader {
                 checkBugs: tl.getBoolInput('bugs', false),
                 checkPerformance: tl.getBoolInput('performance', false),
                 checkBestPractices: tl.getBoolInput('best_practices', false),
+                cleanCode: tl.getBoolInput('clean_code', false),
+                decoupling: tl.getBoolInput('decoupling', false),
+                improvementSuggestions: tl.getBoolInput('improvement_suggestions', false),
                 modifiedLinesOnly: tl.getBoolInput('modified_lines_only', false),
                 enableCommentLineCorrection: tl.getBoolInput('comment_line_correction', false),
                 allowRequeue: tl.getBoolInput('allow_requeue', false),
@@ -87,6 +90,9 @@ export class ConfigLoader {
         console.info(`  Check Bugs: ${config.reviewOptions.checkBugs}`);
         console.info(`  Check Performance: ${config.reviewOptions.checkPerformance}`);
         console.info(`  Check Best Practices: ${config.reviewOptions.checkBestPractices}`);
+        console.info(`  Clean Code: ${config.reviewOptions.cleanCode}`);
+        console.info(`  Decoupling: ${config.reviewOptions.decoupling}`);
+        console.info(`  Improvement Suggestions: ${config.reviewOptions.improvementSuggestions}`);
         console.info(`  Modified Lines Only: ${config.reviewOptions.modifiedLinesOnly}`);
         console.info(`  Comment Line Correction: ${config.reviewOptions.enableCommentLineCorrection}`);
         

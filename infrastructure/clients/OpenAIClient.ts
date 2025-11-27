@@ -65,6 +65,10 @@ export class OpenAIClient implements IAIClient {
             ? advanced.additionalPrompts.map((str) => `- ${str}`).join('\n') 
             : ''}
 
+        ${opts.cleanCode ? '- Analise o código quanto aos princípios de Clean Code: nomes significativos, funções pequenas e focadas, baixa complexidade ciclomática, ausência de código duplicado, e código autoexplicativo' : ''}
+        ${opts.decoupling ? '- Verifique acoplamento entre componentes, dependências excessivas, violações de SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion), e oportunidades para aplicar padrões de design' : ''}
+        ${opts.improvementSuggestions ? '- Forneça sugestões proativas de melhorias: refatorações, otimizações, uso de recursos modernos da linguagem (async/await, optional chaining, destructuring, etc.), e abordagens mais elegantes para resolver o problema' : ''}
+
         IMPORTANTE: Todos os comentários devem ser escritos em português brasileiro claro e profissional.`;
 
         message += `\n\nA resposta deve ser um único objeto JSON (sem blocos de código markdown) e deve usar este formato:

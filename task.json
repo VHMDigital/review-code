@@ -76,6 +76,27 @@
             "helpMarkDown": "Specify whether to include checks for missed best practices during the code review process.\n\n- Set to `true` to perform best practices checks.\n- Set to `false` to skip best practices checks.\n\nEnabling best practices checks helps ensure adherence to coding standards and identifies areas for improvement. Default value is `true`."
         },
         {
+            "name": "clean_code",
+            "type": "boolean",
+            "label": "Check Clean Code principles",
+            "defaultValue": false,
+            "helpMarkDown": "Analisa o código quanto aos princípios de Clean Code: nomes significativos, funções pequenas e focadas, baixa complexidade ciclomática, e código autoexplicativo.\n\n- Set to `true` to enable Clean Code analysis.\n- Set to `false` to skip Clean Code checks.\n\nDefault value is `false`."
+        },
+        {
+            "name": "decoupling",
+            "type": "boolean",
+            "label": "Check code decoupling",
+            "defaultValue": false,
+            "helpMarkDown": "Verifica acoplamento entre componentes, dependências excessivas, violações de SOLID, e oportunidades para aplicar padrões de design.\n\n- Set to `true` to analyze code coupling.\n- Set to `false` to skip decoupling checks.\n\nDefault value is `false`."
+        },
+        {
+            "name": "improvement_suggestions",
+            "type": "boolean",
+            "label": "Provide improvement suggestions",
+            "defaultValue": false,
+            "helpMarkDown": "Fornece sugestões proativas de melhorias: refatorações, otimizações, uso de recursos modernos da linguagem, e melhores abordagens para resolver o problema.\n\n- Set to `true` to receive improvement suggestions.\n- Set to `false` to skip suggestions.\n\nDefault value is `false`."
+        },
+        {
             "name": "modified_lines_only",
             "type": "boolean",
             "label": "Only check modified lines",

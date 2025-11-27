@@ -11,6 +11,9 @@ export interface InputValues {
     bugs: boolean;
     performance: boolean;
     bestPractices: boolean;
+    cleanCode: boolean;
+    decoupling: boolean;
+    improvementSuggestions: boolean;
     modifiedLinesOnly: boolean;
     enableCommentLineCorrection: boolean;
     allowRequeue: boolean;
